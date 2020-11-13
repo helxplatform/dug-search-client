@@ -19,6 +19,7 @@ export const useSearch = () => {
             index: 'test',
             query: query,
             size: 1000,
+            boosted: 1,
         }).then(response => {
             console.log(response.data)
             const hits = response.data.result.total_items === 0 ? [] : response.data.result.hits.hits.map(r => r._source)
