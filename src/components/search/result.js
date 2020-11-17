@@ -73,7 +73,7 @@ export const Result = ({ result, query }) => {
 
     return (
         <Wrapper>
-            <Name>Harmonized Variable: { name }</Name>
+            <Name>Phenotype Concept: { name }</Name>
             <ResultParagraph>
                 <strong>Description</strong>: { description }
             </ResultParagraph>
