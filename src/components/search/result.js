@@ -55,17 +55,18 @@ const CollapserHeader = styled.div`
     padding: 0.5rem 1rem;
 `
 
+
 const StudyName = styled.div``
 const StudyAccession = styled.div``
 
 export const Result = ({ result, query }) => {
-    const { name, description, instructions, tag_id } = result // other properties: description, identifiers, optional_targets, search_targets, pk, studies
+    const { name, description, id, type } = result // other properties: type, search_terms, optional_terms
     const [knowledgeGraphs, setKnowledgeGraphs] = useState([])
     const { fetchKnowledgeGraphs } = useSearch()
 
     useEffect(() => {
         const getKgs = async () => {
-            const kgs = await fetchKnowledgeGraphs(tag_id, query)
+            const kgs = await fetchKnowledgeGraphs(id, query)
             setKnowledgeGraphs(kgs)
         }
         getKgs()
@@ -73,13 +74,36 @@ export const Result = ({ result, query }) => {
 
     return (
         <Wrapper>
-            <Name>Phenotype Concept: { name }</Name>
+            <Name>Concept: { name }</Name>
             <ResultParagraph>
-                <strong>Description</strong>: { description }
+                <strong>ID</strong>: {id} <br></br>
+                <strong>Type</strong>: { type } <br></br>
+                <strong>Description</strong>: { description } <br></br>
             </ResultParagraph>
-            <ResultParagraph>
-                <strong>Instructions</strong>: { instructions }
-            </ResultParagraph>
+            {
+                knowledgeGraphs.length > 0 && (
+                    <Collapser key={ `${ name } kg` } ariaId={ `${ name } kg` } { ...collapserStyles } title={ <CollapserHeader>Knowledge Graph</CollapserHeader> }>
+                        <KnowledgeGraphs graphs={ knowledgeGraphs } />
+                    </Collapser>
+                )
+            }
+        </Wrapper>
+    )
+}
+
+Result.propTypes = {
+    result: PropTypes.shape({
+        id:PropTypes.string.isRequired,
+        name:PropTypes.string.isRequired,
+        description:PropTypes.string.isRequired,
+        type:PropTypes.string.isRequired,
+        search_terms:PropTypes.array.isRequired,
+        optional_terms:PropTypes.array.isRequired
+    })
+}
+
+/*
+Section I had to take out because variables didn't work
             {
                 result.studies.map(({ study_id, study_name, variables }) => (
                     <Collapser key={ `${ name } ${ study_id }` } ariaId={ 'studies' } { ...collapserStyles }
@@ -100,27 +124,4 @@ export const Result = ({ result, query }) => {
                     </Collapser>
                 ))
             }
-            {
-                knowledgeGraphs.length > 0 && (
-                    <Collapser key={ `${ name } kg` } ariaId={ `${ name } kg` } { ...collapserStyles } title={ <CollapserHeader>Knowledge Graph</CollapserHeader> }>
-                        <KnowledgeGraphs graphs={ knowledgeGraphs } />
-                    </Collapser>
-                )
-            }
-        </Wrapper>
-    )
-}
-
-Result.propTypes = {
-    result: PropTypes.shape({
-        name:PropTypes.string.isRequired,
-        description:PropTypes.string.isRequired,
-        identifiers:PropTypes.array.isRequired,
-        instructions:PropTypes.string.isRequired,
-        optional_targets:PropTypes.array.isRequired,
-        search_targets:PropTypes.array.isRequired,
-        pk:PropTypes.number.isRequired,
-        studies:PropTypes.array.isRequired,
-        tag_id:PropTypes.string.isRequired,
-    })
-}
+*/
