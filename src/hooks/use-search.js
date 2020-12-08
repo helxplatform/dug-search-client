@@ -65,34 +65,6 @@ export const useSearch = () => {
         }).then(response => {
             console.log(response.data)
             var res = response.data.result.hits.hits
-            // var groupedIds = vars.reduce((acc,obj)=>{
-            //     let key = obj._source["study_id"]
-            //     if(!acc[key]){
-            //         acc[key] = []
-            //     }
-            //     acc[key].push(obj._source.id)
-            //     return acc
-            // }, {})
-
-            // var res = []
-            // vars.reduce((thing, current) => {
-            //     const x = thing.find(item => item._source.study_id === current._source.study_id);
-            //     if (!x) {
-            //         var cid = current._source.study_id
-            //         var variableIds = groupedIds[cid]
-
-            //         var studyObj = {
-            //             study_id: current._source.study_id,
-            //             study_name: current._source.study_name,
-            //             variables: variableIds
-            //         }
-
-            //         res.push(studyObj)
-            //         return thing.concat([current]);
-            //     } else {
-            //         return thing;
-            //     }
-            // }, []);
 
             console.log(res)
             return res
@@ -101,101 +73,6 @@ export const useSearch = () => {
             console.error(error)
             return []
         })
-        // const variables = [
-        //     {
-        //         "_index": "variables_index",
-        //         "_type": "_doc",
-        //         "_id": "phv00087870.v6.p3",
-        //         "_score": 7.813047,
-        //         "_source": {
-        //             "id": "phv00087870.v6.p3",
-        //             "name": "",
-        //             "description": "",
-        //             "identifiers": [
-        //                 "PATO:0000068",
-        //                 "TOPMED.TAG:29",
-        //                 "ZFA:0000114",
-        //                 "XCO:0000197",
-        //                 "SO:0000905",
-        //                 "MONDO:0005009",
-        //                 "UBERON:0007100",
-        //                 "PATO:0001511",
-        //                 "MONDO:0005252",
-        //                 "foaf:status",
-        //                 "CHEBI:47867",
-        //                 "UBERON:0000948"
-        //             ],
-        //             "dataset_id": "pht001123.v7.p3",
-        //             "dataset_name": "",
-        //             "dataset_description": "",
-        //             "study_id": "phs000209.v13.p3",
-        //             "study_name": "Multi-Ethnic Study of Atherosclerosis (MESA)",
-        //             "study_description": ""
-        //         }
-        //     },
-        //     {
-        //         "_index": "variables_index",
-        //         "_type": "_doc",
-        //         "_id": "phv00087871.v6.p3",
-        //         "_score": 7.813047,
-        //         "_source": {
-        //             "id": "phv00087871.v6.p3",
-        //             "name": "",
-        //             "description": "",
-        //             "identifiers": [
-        //                 "PATO:0000068",
-        //                 "TOPMED.TAG:29",
-        //                 "ZFA:0000114",
-        //                 "XCO:0000197",
-        //                 "SO:0000905",
-        //                 "MONDO:0005009",
-        //                 "UBERON:0007100",
-        //                 "PATO:0001511",
-        //                 "MONDO:0005252",
-        //                 "foaf:status",
-        //                 "CHEBI:47867",
-        //                 "UBERON:0000948"
-        //             ],
-        //             "dataset_id": "pht001123.v7.p3",
-        //             "dataset_name": "",
-        //             "dataset_description": "",
-        //             "study_id": "phs000209.v13.p3",
-        //             "study_name": "Multi-Ethnic Study of Atherosclerosis (MESA)",
-        //             "study_description": ""
-        //         }
-        //     },
-        //     {
-        //         "_index": "variables_index",
-        //         "_type": "_doc",
-        //         "_id": "phv00087872.v6.p3",
-        //         "_score": 7.813047,
-        //         "_source": {
-        //             "id": "phv00087872.v6.p3",
-        //             "name": "",
-        //             "description": "",
-        //             "identifiers": [
-        //                 "PATO:0000068",
-        //                 "TOPMED.TAG:29",
-        //                 "ZFA:0000114",
-        //                 "XCO:0000197",
-        //                 "SO:0000905",
-        //                 "MONDO:0005009",
-        //                 "UBERON:0007100",
-        //                 "PATO:0001511",
-        //                 "MONDO:0005252",
-        //                 "foaf:status",
-        //                 "CHEBI:47867",
-        //                 "UBERON:0000948"
-        //             ],
-        //             "dataset_id": "pht001123.v7.p3",
-        //             "dataset_name": "",
-        //             "dataset_description": "",
-        //             "study_id": "phs000209.v13.p3",
-        //             "study_name": "Multi-Ethnic Study of Atherosclerosis (MESA)",
-        //             "study_description": ""
-        //         }
-        //     }
-        // ]
         setIsLoadingVariables(false)
         return variables.map(variables => variables._source)
     }
