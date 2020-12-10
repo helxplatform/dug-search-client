@@ -61,7 +61,7 @@ export const useSearch = () => {
             index: 'variables_index',
             concept: concept_id,
             query: query,
-            size: 100,
+            size: 1000,
         }).then(response => {
             console.log(response.data)
             var res = response.data.result.hits.hits
