@@ -74,17 +74,18 @@ export const Result = ({ result, query }) => {
         getKgs()
         const getVars = async () => {
             const vars = await fetchVariableResults(id, query)
-            console.log("vars")
-            console.log(vars)
+            //console.log(vars)
             var groupedIds = vars.reduce((acc, obj) => {
                 let key = obj["study_id"]
                 if (!acc[key]) {
                     acc[key] = []
                 }
-                acc[key].push(obj.id)
+                acc[key].push({
+                    id: obj.id,
+                    name: obj.name
+                })
                 return acc
             }, {})
-
             var res = []
             vars.reduce((thing, current) => {
                 const x = thing.find(item => item.study_id === current.study_id);
@@ -107,8 +108,6 @@ export const Result = ({ result, query }) => {
             setVariableResults(res)
         }
         getVars()
-        console.log(knowledgeGraphs)
-        console.log(variableResults)
     }, [])
 
     return (

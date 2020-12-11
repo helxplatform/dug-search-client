@@ -36,7 +36,6 @@ export const useSearch = () => {
 
     const fetchKnowledgeGraphs = async (concept_id, query) => {
         setIsLoadingKnowlegeGraphs(true)
-        console.log(query)
         const knowledgeGraphs = await axios.post(SEARCH_KG_URL, {
             index: 'kg_index',
             unique_id: concept_id,
