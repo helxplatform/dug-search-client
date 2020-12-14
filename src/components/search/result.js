@@ -82,7 +82,8 @@ export const Result = ({ result, query }) => {
                 }
                 acc[key].push({
                     id: obj.id,
-                    name: obj.name
+                    name: obj.name,
+                    description: obj.description
                 })
                 return acc
             }, {})
@@ -105,6 +106,7 @@ export const Result = ({ result, query }) => {
                     return thing;
                 }
             }, []);
+            console.log(res)
             setVariableResults(res)
         }
         getVars()
