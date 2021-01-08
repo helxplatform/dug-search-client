@@ -51,3 +51,5 @@ object_string="${object_string}}"
 echo "$object_string" > /usr/share/nginx/html/runtime-env-vars.js
 
 # # #
+
+# todo: error-handling
