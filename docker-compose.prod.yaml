@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-prod
+    environment:
+      DUG_URL: $DUG_URL
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
