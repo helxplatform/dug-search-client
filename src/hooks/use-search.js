@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-const SEARCH_URL = `${ process.env.REACT_APP_DUG_URL }/search`
-const SEARCH_KG_URL = `${ process.env.REACT_APP_DUG_URL }/search_kg`
+const SEARCH_URL = `${ window.env.DUG_URL }/search`
+const SEARCH_KG_URL = `${ window.env.DUG_URL }/search_kg`
 
 export const useSearch = () => {
     const [isLoadingResults, setIsLoadingResults] = useState(false)
