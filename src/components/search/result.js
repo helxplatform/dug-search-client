@@ -32,6 +32,13 @@ const ResultParagraph = styled(Paragraph)`
     margin: 1rem;
 `
 
+const ConceptType = styled(Paragraph)`
+    margin: 1rem;
+`
+
+const ConceptDescription = styled(Paragraph)`
+    margin: 1rem;
+`
 
 const collapserStyles = {
     titleStyle: {
@@ -114,12 +121,25 @@ export const Result = ({ result, query }) => {
 
     return (
         <Wrapper>
-            <Name>Concept: { name }</Name>
-            <ResultParagraph>
-                <strong>ID</strong>: {id} <br></br>
-                <strong>Type</strong>: { type } <br></br>
-                <strong>Description</strong>: { description } <br></br>
-            </ResultParagraph>
+            { !id.includes("TOPMED") ? (
+                <Name>Concept: <ExternalLink to={`http://purl.obolibrary.org/obo/` + id.replace(/:/, '_')} >{name}</ExternalLink></Name>
+            ): (
+                <Name>Concept: {name}</Name>   
+            )}
+            { 
+                <ResultParagraph>
+                    {type !== "" &&
+                        <ConceptType>
+                            <strong>Type</strong>: { type } <br></br>
+                        </ConceptType>
+                    }
+                    {description !== "" &&
+                        <ConceptDescription>
+                            <strong>Description</strong>: { description } <br></br>
+                        </ConceptDescription>
+                    }
+                </ResultParagraph>
+            }
             {
                 variableResults.length > 0 && variableResults.map(({ study_id, study_name, variables }) =>(
                     <Collapser key={`${name} ${study_id}`} ariaId={'studies'} {...collapserStyles}

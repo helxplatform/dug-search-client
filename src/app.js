@@ -41,7 +41,7 @@ const App = () => {
 
     return (
         <Main>
-            <Title>Semantic Search Test</Title>
+            <Title>Semantic Search</Title>
             
             <br/><br/>
  
