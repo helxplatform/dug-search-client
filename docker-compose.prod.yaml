@@ -6,9 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-prod
-      args:
-        NODE_ENV: production
-        REACT_APP_DUG_URL: $REACT_APP_DUG_URL 
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
