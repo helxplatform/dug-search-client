@@ -12,6 +12,8 @@ import { IconButton } from './components/buttons'
 import { ChevronLeftIcon, ChevronRightIcon, FirstPageIcon, LastPageIcon } from './components/icons'
 import asciiLogo from './logo'
 
+console.log(window.env)
+
 const App = () => {
     const [query, setQuery] = useState('')
     const [resultIndex, setResultIndex] = useState(0)
