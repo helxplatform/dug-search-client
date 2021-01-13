@@ -72,6 +72,7 @@ export const Result = ({ result, query }) => {
     const [variableResults, setVariableResults] = useState([])
     const { fetchKnowledgeGraphs } = useSearch()
     const { fetchVariableResults } = useSearch()
+    const noURLTerms = ["TOPMED", "PATO", "ZFA", "VT", "SO", "IAO", "OBO", "WBbt", "FBbt", "BFO"]
 
     useEffect(() => {
         const getKgs = async () => {
@@ -121,23 +122,31 @@ export const Result = ({ result, query }) => {
 
     return (
         <Wrapper>
-            { !id.includes("TOPMED") ? (
+            { !noURLTerms.map((term) => id.includes(term)).includes(true) ? (
                 <Name>Concept: <ExternalLink to={`http://purl.obolibrary.org/obo/` + id.replace(/:/, '_')} >{name}</ExternalLink></Name>
-            ): (
+            ) : (
                 <Name>Concept: {name}</Name>   
             )}
             { 
                 <ResultParagraph>
-                    {type !== "" &&
+                    {type !== "" ? (
                         <ConceptType>
                             <strong>Type</strong>: { type } <br></br>
                         </ConceptType>
-                    }
-                    {description !== "" &&
+                    ) : (
+                        <ConceptType>
+                            <strong>Type</strong>: Untyped <br></br>
+                        </ConceptType>
+                    )}
+                    {description !== "" ? (
                         <ConceptDescription>
                             <strong>Description</strong>: { description } <br></br>
                         </ConceptDescription>
-                    }
+                    ) : (
+                        <ConceptDescription>
+                            <strong>Description</strong>: No description for this concept. <br></br>
+                        </ConceptDescription>
+                    )}
                 </ResultParagraph>
             }
             {
