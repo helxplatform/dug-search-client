@@ -67,7 +67,7 @@ const StudyName = styled.div``
 const StudyAccession = styled.div``
 
 export const Result = ({ result, query }) => {
-    const { name, description, id, type } = result // other properties: type, search_terms, optional_terms
+    const { name, description, id, type, concept_action } = result // other properties: type, search_terms, optional_terms
     const [knowledgeGraphs, setKnowledgeGraphs] = useState([])
     const [variableResults, setVariableResults] = useState([])
     const { fetchKnowledgeGraphs } = useSearch()
@@ -83,27 +83,28 @@ export const Result = ({ result, query }) => {
             const vars = await fetchVariableResults(id, query)
             //console.log(vars)
             var groupedIds = vars.reduce((acc, obj) => {
-                let key = obj["study_id"]
+                let key = obj["collection_id"]
                 if (!acc[key]) {
                     acc[key] = []
                 }
                 acc[key].push({
-                    id: obj.id,
-                    name: obj.name,
-                    description: obj.description
+                    id: obj.element_id,
+                    name: obj.element_name,
+                    description: obj.element_desc
                 })
                 return acc
             }, {})
+            console.log(vars)
             var res = []
             vars.reduce((thing, current) => {
-                const x = thing.find(item => item.study_id === current.study_id);
+                const x = thing.find(item => item.element_id === current.element_id);
                 if (!x) {
-                    var cid = current.study_id
+                    var cid = current.collection_id
                     var variableIds = groupedIds[cid]
 
                     var studyObj = {
-                        study_id: current.study_id,
-                        study_name: current.study_name,
+                        id: current.element_id,
+                        name: current.element_name,
                         variables: variableIds
                     }
 
@@ -121,8 +122,8 @@ export const Result = ({ result, query }) => {
 
     return (
         <Wrapper>
-            { !id.includes("TOPMED") ? (
-                <Name>Concept: <ExternalLink to={`http://purl.obolibrary.org/obo/` + id.replace(/:/, '_')} >{name}</ExternalLink></Name>
+            { !concept_action=="" ? (
+                <Name>Concept: <ExternalLink to={concept_action} >{name}</ExternalLink></Name>
             ): (
                 <Name>Concept: {name}</Name>   
             )}
@@ -147,16 +148,16 @@ export const Result = ({ result, query }) => {
                             <CollapserHeader>
                                 <StudyName>
                                     <strong>Study</strong>:
-                                    <ExternalLink to={dbGapLink.study(study_id.replace(/^TOPMED\.STUDY:/, ''))} >{study_name}</ExternalLink>
+                                    <ExternalLink to={dbGapLink.study(id.replace(/^TOPMED\.STUDY:/, ''))} >{name}</ExternalLink>
                                 </StudyName>
                                 <StudyAccession>
                                     <strong>Accession</strong>:
-                                    <ExternalLink to={dbGapLink.study(study_id.replace(/^TOPMED\.STUDY:/, ''))} >{study_id.replace(/^TOPMED\.STUDY:/, '')}</ExternalLink>
+                                    <ExternalLink to={dbGapLink.study(id.replace(/^TOPMED\.STUDY:/, ''))} >{id.replace(/^TOPMED\.STUDY:/, '')}</ExternalLink>
                                 </StudyAccession>
                             </CollapserHeader>
                         }
                     >
-                        <VariablesList studyId={study_id.replace(/^TOPMED\.STUDY:/, '')} variables={variables} />
+                        <VariablesList studyId={id.replace(/^TOPMED\.STUDY:/, '')} variables={variables} />
                     </Collapser>
                 ))
             }
@@ -178,7 +179,8 @@ Result.propTypes = {
         description:PropTypes.string.isRequired,
         type:PropTypes.string.isRequired,
         search_terms:PropTypes.array.isRequired,
-        optional_terms:PropTypes.array.isRequired
+        optional_terms:PropTypes.array.isRequired,
+        concept_action:PropTypes.array.isRequired
     })
 }
 
