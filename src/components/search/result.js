@@ -90,21 +90,23 @@ export const Result = ({ result, query }) => {
                 acc[key].push({
                     id: obj.element_id,
                     name: obj.element_name,
-                    description: obj.element_desc
+                    description: obj.element_desc,
+                    e_link: obj.element_action
                 })
                 return acc
             }, {})
             console.log(vars)
             var res = []
             vars.reduce((thing, current) => {
-                const x = thing.find(item => item.element_id === current.element_id);
+                const x = thing.find(item => item.collection_id === current.collection_id);
                 if (!x) {
                     var cid = current.collection_id
                     var variableIds = groupedIds[cid]
 
                     var studyObj = {
-                        id: current.element_id,
-                        name: current.element_name,
+                        c_id: current.collection_id,
+                        c_link: current.collection_action,
+                        c_name: current.collection_name,
                         variables: variableIds
                     }
 
@@ -142,22 +144,22 @@ export const Result = ({ result, query }) => {
                 </ResultParagraph>
             }
             {
-                variableResults.length > 0 && variableResults.map(({ study_id, study_name, variables }) =>(
-                    <Collapser key={`${name} ${study_id}`} ariaId={'studies'} {...collapserStyles}
+                variableResults.length > 0 && variableResults.map(({ c_id, c_name, variables, c_link }) =>(
+                    <Collapser key={`${name} ${c_id}`} ariaId={'studies'} {...collapserStyles}
                         title={
                             <CollapserHeader>
                                 <StudyName>
                                     <strong>Study</strong>:
-                                    <ExternalLink to={dbGapLink.study(id.replace(/^TOPMED\.STUDY:/, ''))} >{name}</ExternalLink>
+                                    <ExternalLink to={c_link} >{c_name}</ExternalLink>
                                 </StudyName>
                                 <StudyAccession>
                                     <strong>Accession</strong>:
-                                    <ExternalLink to={dbGapLink.study(id.replace(/^TOPMED\.STUDY:/, ''))} >{id.replace(/^TOPMED\.STUDY:/, '')}</ExternalLink>
+                                    <ExternalLink to={c_link} >{c_id.replace(/^TOPMED\.STUDY:/, '')}</ExternalLink>
                                 </StudyAccession>
                             </CollapserHeader>
                         }
                     >
-                        <VariablesList studyId={id.replace(/^TOPMED\.STUDY:/, '')} variables={variables} />
+                        <VariablesList studyId={c_id.replace(/^TOPMED\.STUDY:/, '')} variables={variables} />
                     </Collapser>
                 ))
             }
