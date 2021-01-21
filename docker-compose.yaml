@@ -2,14 +2,17 @@ version: '3'
 
 services:
   client:
-    container_name: helx-search-client-dev
+    container_name: dug-search-client
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+        REACT_APP_DUG_URL: $REACT_APP_DUG_URL
     volumes:
-      - .:/usr/src/app
+      - ./:/usr/src/app
       - /usr/src/app/node_modules
-    environment:
-      NODE_ENV: development
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - $CLIENT_PORT:3000
+      - 80:8080
+    restart: always
