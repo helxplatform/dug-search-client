@@ -67,9 +67,9 @@ const KnowledgeGraph = ({ graph }) => {
 
     return interactions.map((interaction, i) => (
         <Fragment key={ i }>
-            <div className="source-label">{interaction.source.name} (<ExternalLink to={kgLink.get_curie_purl(interaction.source.id)}>{ interaction.source.id }</ExternalLink>)</div>
+            <div className="source-label"><ExternalLink to={kgLink.get_curie_purl(interaction.source.id)}>{interaction.source.name }</ExternalLink></div>
             <div />
-            <div className="target-label">{interaction.target.name} (<ExternalLink to={kgLink.get_curie_purl(interaction.target.id)}>{interaction.target.id}</ExternalLink>)</div>
+            <div className="target-label"><ExternalLink to={kgLink.get_curie_purl(interaction.target.id)}>{interaction.target.name}</ExternalLink></div>
             <div className="source-node"><br/><Node /></div>
             <div className="type-edge">
                 <Edge>
