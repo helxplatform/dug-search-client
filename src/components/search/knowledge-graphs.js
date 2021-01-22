@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import { kgLink } from '../../utils'
 import styled from 'styled-components'
+import { ExternalLink } from '../external-link'
 
 const InteractionsGrid = styled.div`
     display: grid;
@@ -65,9 +67,9 @@ const KnowledgeGraph = ({ graph }) => {
 
     return interactions.map((interaction, i) => (
         <Fragment key={ i }>
-            <div className="source-label">{ interaction.source.name } ({ interaction.source.id })</div>
+            <div className="source-label">{interaction.source.name} (<ExternalLink to={kgLink.get_curie_purl(interaction.source.id)}>{ interaction.source.id }</ExternalLink>)</div>
             <div />
-            <div className="target-label">{ interaction.target.name } ({ interaction.target.id })</div>
+            <div className="target-label">{interaction.target.name} (<ExternalLink to={kgLink.get_curie_purl(interaction.target.id)}>{interaction.target.id}</ExternalLink>)</div>
             <div className="source-node"><br/><Node /></div>
             <div className="type-edge">
                 <Edge>
