@@ -6,7 +6,6 @@ import { Subheading, Paragraph } from '../typography'
 import { Collapser } from '../collapser'
 import { KnowledgeGraphs } from '../search'
 import { VariablesList } from './study-variables-list'
-import { dbGapLink } from '../../utils'
 import { ExternalLink } from '../external-link'
 
 const Wrapper = styled.div`
@@ -72,7 +71,6 @@ export const Result = ({ result, query }) => {
     const [variableResults, setVariableResults] = useState([])
     const { fetchKnowledgeGraphs } = useSearch()
     const { fetchVariableResults } = useSearch()
-    const noURLTerms = ["TOPMED", "PATO", "ZFA", "VT", "SO", "IAO", "OBO", "WBbt", "FBbt", "BFO"]
 
     useEffect(() => {
         const getKgs = async () => {
@@ -110,7 +108,7 @@ export const Result = ({ result, query }) => {
                         c_name: current.collection_name,
                         variables: variableIds
                     }
-
+                    
                     res.push(studyObj)
                     return thing.concat([current]);
                 } else {
