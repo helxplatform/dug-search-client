@@ -7,6 +7,7 @@ import { Collapser } from '../collapser'
 import { KnowledgeGraphs } from '../search'
 import { VariablesList } from './study-variables-list'
 import { ExternalLink } from '../external-link'
+import { Tabs, Tab} from 'react-bootstrap';
 
 const Wrapper = styled.div`
     display: flex;
@@ -65,6 +66,8 @@ const CollapserHeader = styled.div`
 const StudyName = styled.div``
 const StudyAccession = styled.div``
 
+
+
 export const Result = ({ result, query }) => {
     const { name, description, id, type, concept_action } = result // other properties: type, search_terms, optional_terms
     const [knowledgeGraphs, setKnowledgeGraphs] = useState([])
@@ -79,47 +82,13 @@ export const Result = ({ result, query }) => {
         }
         getKgs()
         const getVars = async () => {
-            const vars = await fetchVariableResults(id, query)
-            //console.log(vars)
-            var groupedIds = vars.reduce((acc, obj) => {
-                let key = obj["collection_id"]
-                if (!acc[key]) {
-                    acc[key] = []
-                }
-                acc[key].push({
-                    id: obj.element_id,
-                    name: obj.element_name,
-                    description: obj.element_desc,
-                    e_link: obj.element_action
-                })
-                return acc
-            }, {})
-            console.log(vars)
-            var res = []
-            vars.reduce((thing, current) => {
-                const x = thing.find(item => item.collection_id === current.collection_id);
-                if (!x) {
-                    var cid = current.collection_id
-                    var variableIds = groupedIds[cid]
-
-                    var studyObj = {
-                        c_id: current.collection_id,
-                        c_link: current.collection_action,
-                        c_name: current.collection_name,
-                        variables: variableIds
-                    }
-                    
-                    res.push(studyObj)
-                    return thing.concat([current]);
-                } else {
-                    return thing;
-                }
-            }, []);
-            console.log(res)
+            const res = await fetchVariableResults(id, query)
             setVariableResults(res)
         }
         getVars()
     }, [])
+
+
 
     return (
         <Wrapper>
@@ -151,7 +120,7 @@ export const Result = ({ result, query }) => {
                 </ResultParagraph>
             }
             {
-                variableResults.length > 0 && variableResults.map(({ c_id, c_name, variables, c_link }) =>(
+                Object.keys(variableResults).length === 1 ? ( variableResults[Object.keys(variableResults)[0]].map(({ c_id, c_name, elements, c_link }) =>(
                     <Collapser key={`${name} ${c_id}`} ariaId={'studies'} {...collapserStyles}
                         title={
                             <CollapserHeader>
@@ -166,9 +135,38 @@ export const Result = ({ result, query }) => {
                             </CollapserHeader>
                         }
                     >
-                        <VariablesList studyId={c_id.replace(/^TOPMED\.STUDY:/, '')} variables={variables} />
+                        <VariablesList studyId={c_id.replace(/^TOPMED\.STUDY:/, '')} elements={elements} />
                     </Collapser>
-                ))
+                ))) : (
+                        <Tabs defaultActiveKey={Object.keys(variableResults)[0]} id="uncontrolled-tab-example" tabWidth={2} paneWidth={5} position="left">
+                            {
+                                Object.keys(variableResults).map(v => (
+                                    <Tab eventKey={v} title={v}>
+                                        {
+                                            variableResults[v].map(({ c_id, c_name, elements, c_link }) => (
+                                                    <Collapser key={`${name} ${c_id}`} ariaId={'studies'} {...collapserStyles}
+                                                        title={
+                                                            <CollapserHeader>
+                                                                <StudyName>
+                                                                    <strong>Study</strong>:
+                                                                    <ExternalLink to={c_link} >{c_name}</ExternalLink>
+                                                                </StudyName>
+                                                                <StudyAccession>
+                                                                    <strong>Accession</strong>:
+                                                                    <ExternalLink to={c_link} >{c_id.replace(/^TOPMED\.STUDY:/, '')}</ExternalLink>
+                                                                </StudyAccession>
+                                                            </CollapserHeader>
+                                                        }
+                                                    >
+                                                        <VariablesList studyId={c_id.replace(/^TOPMED\.STUDY:/, '')} elements={elements} />
+                                                    </Collapser>
+                                            ))
+                                        }
+                                    </Tab>
+                                ))
+                            }
+                        </Tabs>
+                )
             }
             {
                 knowledgeGraphs.length > 0 && (

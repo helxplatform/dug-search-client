@@ -21,15 +21,15 @@ const List = styled.ul`
 
 const ListItem = styled.li``
 
-export const VariablesList = ({ studyId, variables }) => {
+export const VariablesList = ({ studyId, elements }) => {
     return (
         <Wrapper>
             <strong>Variables</strong>
             <List>
                 {
-                    variables.map(variable => (
-                        <ListItem key={ variable.id }>
-                            <VariableLink to={ variable.e_link || null }>{ variable.name.concat(": ").concat(variable.description) }</VariableLink>
+                    elements.map(element => (
+                        <ListItem key={element.id }>
+                            <VariableLink to={element.e_link || null}>{element.name.concat(": ").concat(element.description) }</VariableLink>
                         </ListItem>
                     ))
                 }

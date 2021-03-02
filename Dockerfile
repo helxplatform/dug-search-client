@@ -15,6 +15,9 @@ ENV PATH /src/node_modules/.bin:$PATH
 ARG REACT_APP_API_ROOT=$REACT_APP_API_ROOT
 ARG REACT_APP_DATA_API_ROOT=$REACT_APP_DATA_API_ROOT
 
+# set path to run packages from node_modules
+ENV NODE_PATH=/usr/src/app/node_modules/.bin
+
 # Install and cache app dependencies
 COPY package*.json /src/
 RUN npm install
