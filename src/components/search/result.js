@@ -141,7 +141,7 @@ export const Result = ({ result, query }) => {
                         <Tabs defaultActiveKey={Object.keys(variableResults)[0]} id="uncontrolled-tab-example" tabWidth={2} paneWidth={5} position="left">
                             {
                                 Object.keys(variableResults).map(v => (
-                                    <Tab eventKey={v} title={v}>
+                                    <Tab eventKey={v} title={v.replace('_', ' ')}>
                                         {
                                             variableResults[v].map(({ c_id, c_name, elements, c_link }) => (
                                                     <Collapser key={`${name} ${c_id}`} ariaId={'studies'} {...collapserStyles}
@@ -190,34 +190,3 @@ Result.propTypes = {
         concept_action:PropTypes.array.isRequired
     })
 }
-
-/*
-            {
-                knowledgeGraphs.length > 0 && (
-                    <Collapser key={ `${ name } kg` } ariaId={ `${ name } kg` } { ...collapserStyles } title={ <CollapserHeader>Knowledge Graph</CollapserHeader> }>
-                        <KnowledgeGraphs graphs={ knowledgeGraphs } />
-                    </Collapser>
-                )
-            }
-Section I had to take out because variables didn't work
-            {
-                variableResults.studies.map(({ study_id, study_name, variables }) => (
-                    <Collapser key={ `${ name } ${ study_id }` } ariaId={ 'studies' } { ...collapserStyles }
-                        title={
-                            <CollapserHeader>
-                                <StudyName>
-                                    <strong>Study</strong>:
-                                    <ExternalLink to={ dbGapLink.study(study_id.replace(/^TOPMED\.STUDY:/, '')) } >{ study_name }</ExternalLink>
-                                </StudyName>
-                                <StudyAccession>
-                                    <strong>Accession</strong>: 
-                                    <ExternalLink to={ dbGapLink.study(study_id.replace(/^TOPMED\.STUDY:/, '')) } >{ study_id.replace(/^TOPMED\.STUDY:/, '') }</ExternalLink>
-                                </StudyAccession>
-                            </CollapserHeader>
-                        }
-                    >
-                        <VariablesList studyId={ study_id.replace(/^TOPMED\.STUDY:/, '') } variables={ variables } />
-                    </Collapser>
-                ))
-            }
-*/
