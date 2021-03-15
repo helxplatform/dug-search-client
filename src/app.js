@@ -59,7 +59,7 @@ const App = () => {
                 {
                     searchedQuery && (
                         <Fragment>
-                            { totalItems > 1 && <Heading center>{ totalItems } Phenotype Concepts found for "{ searchedQuery }"</Heading> }
+                            { totalItems >= 1 && <Heading center>{ totalItems } Concept(s) found for "{ searchedQuery }"</Heading> }
                             <ResultsCard>
                                 <ResultsCardHeader>
                                     { totalItems > 1 && <IconButton disabled={ resultIndex === 0 } onClick={ goToFirstResult }><FirstPageIcon fill="#fff" size={ 24 } /></IconButton> }

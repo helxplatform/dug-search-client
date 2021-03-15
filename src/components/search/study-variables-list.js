@@ -28,8 +28,8 @@ export const VariablesList = ({ studyId, variables }) => {
             <List>
                 {
                     variables.map(variable => (
-                        <ListItem key={ variable }>
-                            <VariableLink to={ dbGapLink.variable(studyId, variable) || null }>{ variable }</VariableLink>
+                        <ListItem key={ variable.id }>
+                            <VariableLink to={ variable.e_link || null }>{ variable.name.concat(": ").concat(variable.description) }</VariableLink>
                         </ListItem>
                     ))
                 }
