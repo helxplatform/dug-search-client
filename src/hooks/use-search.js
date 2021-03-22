@@ -62,8 +62,8 @@ export const useSearch = () => {
             query: query,
             size: 1000,
         }).then(response => {
-            console.log(response.data)
-            var res = response.data.result.hits.hits
+            console.log(response)
+            var res = response.data.result
 
             console.log(res)
             return res
@@ -73,7 +73,7 @@ export const useSearch = () => {
             return []
         })
         setIsLoadingVariables(false)
-        return variables.map(variables => variables._source)
+        return variables
     }
 
     return { isLoadingResults, isLoadingKnowlegeGraphs, isLoadingVariables, error, results, totalItems, fetchResults, fetchKnowledgeGraphs, fetchVariableResults }
