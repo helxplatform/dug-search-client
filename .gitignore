@@ -16,3 +16,6 @@
 .env
 
 npm-debug.log*
+
+# IDE
+.idea/
