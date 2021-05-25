@@ -10,14 +10,14 @@ pipeline {
         stage('Install') {
             steps {
                 sh '''
-                npm ci
+                npm run build
                 '''
             }
         }
         stage('Test') {
             steps {
                 sh '''
-                npm run test
+                CI=true npm test
                 '''
             }
         }
