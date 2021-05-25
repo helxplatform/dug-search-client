@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Publish') {
             when {
-                tag "release-*"
+                buildingTag()
             }
             steps {
                 sh '''
