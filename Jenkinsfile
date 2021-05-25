@@ -29,7 +29,7 @@ pipeline {
                 sh '''
                 VERSION=(node -p "require('./package.json').version")
                 DOCKER_ORG=helxplatform
-                DOCKER_TAG=helx-ui:$VERSION
+                DOCKER_TAG=dug-search-client:$VERSION
                 docker build . --no-cache --pull -t $DOCKER_ORG/$DOCKER_TAG
                 '''
             }
