@@ -10,7 +10,7 @@ pipeline {
         stage('Install') {
             steps {
                 sh '''
-                npm run build
+                npm ci
                 '''
             }
         }
@@ -31,7 +31,6 @@ pipeline {
                 DOCKER_ORG=helxplatform
                 DOCKER_TAG=helx-ui:$VERSION
                 docker build . --no-cache --pull -t $(DOCKER_ORG)/$(DOCKER_TAG)
-//                 docker image push $(DOCKER_ORG)/$(DOCKER_TAG)
                 '''
             }
         }
