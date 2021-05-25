@@ -30,7 +30,7 @@ pipeline {
                 VERSION=(node -p "require('./package.json').version")
                 DOCKER_ORG=helxplatform
                 DOCKER_TAG=helx-ui:$VERSION
-                docker build . --no-cache --pull -t $(DOCKER_ORG)/$(DOCKER_TAG)
+                docker build . --no-cache --pull -t $DOCKER_ORG/$DOCKER_TAG
                 '''
             }
         }
