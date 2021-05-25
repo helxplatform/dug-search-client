@@ -22,9 +22,9 @@ pipeline {
             }
         }
         stage('Publish') {
-            when {
-                tag "release-*"
-            }
+//             when {
+//                 tag "release-*"
+//             }
             steps {
                 sh '''
                 VERSION=(node -p "require('./package.json').version")
