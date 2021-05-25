@@ -10,14 +10,14 @@ pipeline {
         stage('Install') {
             steps {
                 sh '''
-                npm ci
+                make install.ci
                 '''
             }
         }
         stage('Test') {
             steps {
                 sh '''
-                CI=true npm test
+                make test.ci
                 '''
             }
         }
@@ -27,10 +27,7 @@ pipeline {
 //             }
             steps {
                 sh '''
-                VERSION=(node -p "require('./package.json').version")
-                DOCKER_ORG=helxplatform
-                DOCKER_TAG=dug-search-client:$VERSION
-                docker build . --no-cache --pull -t $DOCKER_ORG/$DOCKER_TAG
+                make publish
                 '''
             }
         }
